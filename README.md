@@ -1,4 +1,6 @@
-# Ex.08 Design of Interactive Image Gallery
+# Ex.07 Design of Interactive Image Gallery
+# Date:
+4/10/2025
 # AIM:
 To design a web application for an inteactive image gallery with minimum five images.
 
@@ -22,130 +24,208 @@ Validate the HTML and CSS code.
 Publish the website in the given URL.
 
 # PROGRAM :
-```
 
+```
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ART GALLERY</title>
-    <style>
-        body {
-            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-            margin: 0;
-            padding: 0;
-            text-align: center;
-            background-color: rgb(248, 235, 220);
-            background-size: cover;  
-            background-position: center;
-            background-attachment: fixed;   
-            background-repeat: no-repeat;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image Gallery with onclick</title>
+  <style>
+    img{
+      object-fit: cover;
+      background-color: rgb(118, 137, 131);
+      padding:13px;
+      object-position: top;
+    }
+    .img2{
+      position:absolute;
+      top:23%;
+      left:33%;
+      height:220px;
+      width:340px;
+      object-position: bottom;
+    }
+    .img5{
+      position: absolute;
+      top:8%;
+      left:19%;
+      height:340px;
+      width:220px;
+    }
+    .img7{
+      position:absolute;
+      top:16%;
+      left:54%;
+      height:340px;
+      width:220px;
+    }
+    .img1{
+      position:absolute;
+      top:59%;
+      left:47%;
+      width:340px;
+      height:220px;
+      object-position: top;
+    }
+    .img4{
+      position:absolute;
+      top:51%;
+      left:12%;
+      width:340px;
+      height:220px;
+    }
+    .img8{
+      position:absolute;
+      top:51.5%;
+      left:33%;
+      height:340px;
+      width:220px;
+    }
+    .img6{
+      position:absolute;
+      top:9%;
+      left:68%;
+      width:340px;
+      height:220px;
+    }
+    .img3{
+      height:340px;
+      width:220px;
+      position:absolute;
+      top:37%;
+      left:68%;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background: #2e2929;
+      padding: 20px;
+    }
 
-        h1 {
-            margin-top: 20px;
-            font-family:cursive;
-        }
+    .gallery {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+    }
 
-        .gallery {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 20px;
-            padding: 10px;
-        }
+    .gallery img {
+      /*width: 300px;
+      height: 170px;*/
+      cursor: pointer;
+      border-radius: 6px;
+      transition: transform 0.3s;
+      margin:20px;
+    }
 
-        .gallery img {
-            width: 350px;
-            height: 250px;
-            border: 6px solid #000000;
-            border-radius: 30px;
-            cursor: pointer;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
+    .gallery img:hover {
+      transform: scale(1.5);
+    }
 
-        .gallery img:hover {
-            transform: scale(1.1);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
+    .lightbox {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      justify-content: center;
+      align-items: center;
+    }
 
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(120, 147, 156, 0.8);
-            justify-content: center;
-            align-items: center;
-        }
+    .lightbox img {
+      max-width: 90%;
+      max-height: 80%;
+      border-radius: 10px;
+    }
 
-        .modal img {
-            max-width: 90%;
-            max-height: 90%;
-            border: 4px solid rgb(1, 1, 1);
-            border-radius: 30px;
-        }
-
-        .modal span {
-            position: absolute;
-            top: 20px;
-            right: 40px;
-            font-size: 50px;
-            color: rgb(0, 0, 0);
-            cursor: pointer;
-            font-weight: bold;
-        }
-    </style>
+    .close {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      font-size: 2rem;
+      color: white;
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
-    <h1>ART GALLERY</h1>
-    <div class="gallery">
-        <img src="niagara.jpg" alt="Image 1" onclick="openModal(this)">
-        <img src="airballoon.jpeg" alt="Image 2" onclick="openModal(this)">
-        <img src="northern light.jpeg" alt="Image 3" onclick="openModal(this)">
-        <img src="lantern.jpeg" alt="Image 4" onclick="openModal(this)">
-        <img src="greek.jpg" alt="Image 5" onclick="openModal(this)">
-        <img src="italy.jpeg" alt="Image 1" onclick="openModal(this)">
-        <img src="bioluminescent.jpeg" alt="Image 2" onclick="openModal(this)">
-        <img src="bridge.webp" alt="Image 3" onclick="openModal(this)">
-        <img src="maldives.jpg" alt="Image 4" onclick="openModal(this)">
-        <img src="paris.jpeg" alt="Image 5" onclick="openModal(this)">
-    </div>
-    <div class="modal" id="imageModal">
-        <span onclick="closeModal()">&times;</span>
-        <img id="modalImage" src="" alt="">
-    </div>
-    <script>
-        function openModal(image) {
-            const modal = document.getElementById('imageModal');
-            const modalImg = document.getElementById('modalImage');
-            modal.style.display = 'flex';
-            modalImg.src = image.src;
-        }
-        function closeModal() {
-            const modal = document.getElementById('imageModal');
-            modal.style.display = 'none';
-        }
-    </script>
+  <h2 style="font-family: arial;font-size:18;color:aquamarine;">GALLERY PAGE</h2>
+
+  <!-- Thumbnails with onclick -->
+  <div class="gallery">
+    <img src="{% static 'img1.jpg' %}" alt="img1" onclick="openLightbox(this)" class="img1">
+    <img src="{% static 'img2.jpg' %}" alt="img2" onclick="openLightbox(this)" class="img2">
+    <img src="{% static 'img3.jpg' %}" alt="img3" onclick="openLightbox(this)" class="img3">
+    <img src="{% static 'img4.jpg' %}" alt="img4" onclick="openLightbox(this)" class="img4">
+    <img src="{% static 'img5.jpg' %}" alt="img5" onclick="openLightbox(this)" class="img5">
+    <img src="{% static 'img6.jpg' %}" alt="img6" onclick="openLightbox(this)" class="img6">
+    <img src="{% static 'img7.jpg' %}" alt="img7 onclick="openLightbox(this)" class="img7">
+    <img src="{% static 'img8.jpg' %}" alt="img8 onclick="openLightbox(this)" class="img8">
+  </div>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox">
+    <span class="close" onclick="closeLightbox()">&times;</span>
+    <img id="lightbox-img" src="">
+  </div>
+
+  <script>
+    var lightbox = document.getElementById("lightbox");
+    var lightboxImg = document.getElementById("lightbox-img");
+    function openLightbox(image) {
+      lightbox.style.display = "flex";
+      lightboxImg.src = image.src;
+    }
+
+    function closeLightbox() {
+      document.getElementById("lightbox").style.display = "none";
+    }
+  </script>
 </body>
 </html>
+
+views:
+
+from django.shortcuts import render
+
+def gal(request):
+    return render(request,"gallery.html")
+
+urls:
+
+"""
+URL configuration for pname project.
+
+The `urlpatterns` list routes URLs to views. For more information please see:
+    https://docs.djangoproject.com/en/5.2/topics/http/urls/
+Examples:
+Function views
+    1. Add an import:  from my_app import views
+    2. Add a URL to urlpatterns:  path('', views.home, name='home')
+Class-based views
+    1. Add an import:  from other_app.views import Home
+    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
+Including another URLconf
+    1. Import the include() function: from django.urls import include, path
+    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
+"""
+from django.contrib import admin
+from django.urls import path
+from app import views
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('',views.gal),
+]
+
 ```
 # OUTPUT:
-
-![alt text](<Screenshot 2025-10-09 084707.png>)
-
-
-![alt text](<Screenshot 2025-10-09 084736.png>)
-
-
-![alt text](<Screenshot 2025-10-09 084759.png>)
-
-
-![alt text](<Screenshot 2025-10-09 084828.png>)
-
+![alt text](<Image Gallery with onclick and 2 more pages - Personal - Microsoft​ Edge 04-10-2025 11_48_49.png>)
+![alt text](<Image Gallery with onclick - Personal - Microsoft​ Edge 04-10-2025 12_17_26.png>)
+![alt text](<Image Gallery with onclick - Personal - Microsoft​ Edge 04-10-2025 12_17_31.png>)
 
 
 
